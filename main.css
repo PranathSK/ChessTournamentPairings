@@ -1,0 +1,41 @@
+body {
+    background-image: url(https://images.hdqwalls.com/download/chess-8k-2r-1360x768.jpg);
+}
+.players {
+    font-size: xx-large;
+    text-align: center;
+    width: 400px;
+    height: 500px;
+    margin-left: 125px;
+}
+input.name {
+    font-size: large;
+    border: brown;
+    margin-top: 70px;
+    height: 30px;
+    background-image: url(https://images.hdqwalls.com/download/chess-8k-2r-1360x768.jpg);
+    color:  rgb(198, 109, 250);
+}
+::placeholder {
+    color: rgb(198, 109, 250);
+}
+input.rating {
+    border-width: thick;
+    border: red;
+    height: 30px;
+    font-size: large;
+    color:  rgb(198, 109, 250);
+    background-image: url(https://images.hdqwalls.com/download/chess-8k-2r-1360x768.jpg);
+    width: 300px;
+}
+button{
+    font-size: large;
+    background-image: url(https://images.hdqwalls.com/download/chess-8k-2r-1360x768.jpg);
+}
+p.hi{
+    color:rgb(226, 235, 186);
+}
+h.current{
+    color:rgb(240, 222, 227);
+    font-size: 20px;
+}
