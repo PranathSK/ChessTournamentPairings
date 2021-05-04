@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIDE Swiss Manager Input page</title>
+    <link rel="stylesheet" href="test.css">
+    <script type="text/javascript" src="test.js"></script>
+    <link rel="icon" href="td1.png">
+</head>
+<body>
+    <p id = "matchup" class="mu">Player 1 vs Player 2</p>
+    <input id="resultBox" class="rb" type="text" name="resultBox" placeholder="Result" size="30"><button class="submitRes" id="submitRes" type="button" name="submitRes" onclick="navRes()">Submit result</button><br>
+    <p id="current" class="current"></p>
+    <div class="players" id="pls">
+        <form class="beg">
+            <input class="name" type="text" name="name" id="name" placeholder="NAME" size="30"><br>
+            <input class="rating" type="number" name="rating" id="rating" placeholder="RATING" max="4000" size="30"><br><br>
+            <button class="next" type="button" name="next" id="next" onclick="nextf()">NEXT PLAYER</button><br>
+            <button class="start" type="button" name="start" id="start" onclick="startrounds()">START ROUNDS</button>
+            <button class="view" type="button" name="view" id="view" onclick="viewPlayers()">View Entered players in console</button>
+        </form> 
+        <p id='hi' class = "hi"></p>      
+    </div>
+</body>
+</html>
