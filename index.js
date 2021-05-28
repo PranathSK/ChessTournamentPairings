@@ -306,7 +306,6 @@ function askResult(){
 function navRes(){
     if (details[1] == 1){
         r = result(details[0], details[0]+1, document.getElementById('resultBox').value);
-        document.getElementById('resultBox').value = '';
         details[0] += 2;
     }
     else if (details[1] == 2){
@@ -314,11 +313,9 @@ function navRes(){
         if (fTwo){
             r = result(players.length-2, players.length-1, document.getElementById('resultBox').value);
             fTwo = false;
-            document.getElementById('resultBox').value = '';
         }
         else{
             r = result(details[0]+2, details[0], document.getElementById('resultBox').value);
-            document.getElementById('resultBox').value = '';
             if ((details[0]+3)%4 == 0)
                 details[0] += 3;
             else
