@@ -46,7 +46,7 @@ function startrounds(){
         }
         var rel = document.createElement('button');
         rel.innerHTML = 'New Tourney';
-        rel.onclick = function() {window.location.replace('test.html')};
+        rel.onclick = function() {location.reload();};
         document.getElementById("current").style.visibility = 'visible';
         document.getElementById("current").append(rel);
 
@@ -195,7 +195,6 @@ function printPairings(){
     else {
         pos = 0;
         rem = players.length%6;
-        console.log('3');
         for (b = 0; b < (players.length-rem)/2; b++){
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[pos].name + '  Vs  ' + players[pos+3].name;
             if ((pos+4) % 6 == 0)
@@ -271,7 +270,6 @@ function askResult(){
         var rem = players.length % 2;
         var boards = (players.length-rem)/2;
         if (details[3] >= boards){
-            viewPlayers();
             details[1] = 1;
             details[2] += 1;
             startrounds();
