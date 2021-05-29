@@ -1,5 +1,6 @@
 /* Players array is the main one that contains everything, r is for useless return variables
-fTwo is to make sure if or not special has to come */
+fTwo is to make sure if or not special has to come 
+fth is for the 3rd pairing system specials*/
 var players = [];
 var fTwo = false;
 var fTh = [0, 0];
@@ -7,6 +8,7 @@ var r = 0;
 var details = [0, 1, 1, 0];
 details[1] = Math.round(Math.random()*2+1);
 // Details[0]: position of players, Details[1]: Type of pairing, Details[2]: round No. Details[4]: Board no.
+// The first type shall be random and then follow ascending pattern ie 123123123...
 
 // Function called by the <next player> button Clears the field for new input and stores the value given
 // EZ
@@ -35,7 +37,10 @@ function startrounds(){
     console.log(details[1]);
     // Everytime a round starts update the standings
     r = update();
+    // Hide the input elements
     document.getElementById('pls').style.visibility = "hidden";
+
+    // Set Rounds for the Tournament
     var rounds = 3;
     if (players.length > 16  && players.length <= 30)
         rounds = 4;
@@ -49,6 +54,7 @@ function startrounds(){
         rounds = 8;
     else
         rounds = 10;
+    
     // If the round no. is greater that rounds initialised, Exit program with result;
     if (details[2] > rounds){        
         document.getElementById("current").innerHTML = '';
@@ -63,7 +69,8 @@ function startrounds(){
         document.getElementById("current").append(rel);
 
     }
-    // Else Set Board No. and position of players current to nil[starting]
+
+    // Else Set Board No. and position of players current to nil[starting] and start the pairing Algorithm
     else{
         details[0] = 0;
         details[3] = 0;
@@ -97,14 +104,18 @@ function update(){
     return 0;
 }
 
+// Too many swapping happens in update(); so better to use a function
 function swap(x, y){
     var temp = players[x];
     players[x] = players[y];
     players[y] = temp;
     return 0;
 }
+
 // Managing result given with the players
 function result(pl1, pl2, res){
+
+    // If won or Lost set the winner's score to +1 ie n(current score)+1 tiebreaker + opponents score and calculate Elo change for both of them
     if (res === "1-0"){
         players[pl1].score += 1;
         players[pl1].tiebreaker += players[pl2].score;
@@ -117,6 +128,8 @@ function result(pl1, pl2, res){
         players[pl1].rating += rchange(players[pl1].rating, players[pl2].rating, 0.0);
         players[pl2].rating += rchange(players[pl2].rating, players[pl1].rating, 1.0);
     }
+
+    // IF draw then +=0.5 to both players half of the other players' score to tiebreaker and Calculate Elo Change
     else{
         players[pl1].score += 0.5;
         players[pl2].score += 0.5;
@@ -149,10 +162,12 @@ function rchange(a, b, r){
         else 
             expect = 0.0;
     }
+    // Elo Change
     return (10*(r-expect));
 }
 
-// To view all the players entered if you forget or you are Pranath
+/* To view all the players entered if you forget or you are Pranath or you are contributing to the site
+Might have to change it into a visible element for Mobile Chrome users or if they do not know where the console is */
 function viewPlayers(){
     console.clear();
     for (var i = 0; i < players.length; i++)
@@ -160,11 +175,15 @@ function viewPlayers(){
     return 0;
 }
 
-// To print the entire list of Pairings on the web page instead of console or ugly pop up (V.1)
+// To print the entire list of Pairings on the web page instead of console or ugly pop up (git checkout Ugly-pop-up)
 function printPairings(){
+
+    // Give each type three basic variables -> the reminder for their division, the printing position and the board no.
     var rem;
     var pos;
     var b = 0;
+
+    // 1v2 3v4 5v6 ...
     if (details[1] == 1){
         pos = 0;
         rem = players.length % 2;
@@ -172,11 +191,14 @@ function printPairings(){
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[pos].name + ' (' + players[pos].rating + ')' + '  Vs  ' + players[pos+1].name+ ' (' + players[pos+1].rating + ')';
             pos += 2;
         }
+        // If there is a person unpaired
         if (rem == 1){
             document.getElementById("current").innerHTML += '<br>' + players[players.length-1].name + ' Gets Bye';
             players[players.length-1].score += 1;
         }
     }
+
+    // 3v1 4v2 7v5 8v6...
     else if (details[1] == 2){
         pos = 0;
         rem = players.length % 4;
@@ -187,18 +209,24 @@ function printPairings(){
             else
                 pos += 1;
         }
+
+        // One left out
         if (rem == 1){
             document.getElementById("current").innerHTML += '<br>' + players[players.length-1].name + ' Gets Bye';
             players[players.length-1].score += 1;
         }
+        //Two Left out
         else if (rem == 2)
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')'  + '  Vs  ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')' ;
+        // Three left out
         else if (rem == 3){
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')'  + '  Vs  ' + players[players.length-3].name + ' (' + players[players.length-3].rating + ')' ;
             document.getElementById("current").innerHTML += '<br>' + players[players.length-2].name + ' Gets Bye';
             players[players.length-2].score += 1;
         }
     }
+
+    // 1v4 2v5 3v6 7v10 8v11 9v12....
     else {
         pos = 0;
         rem = players.length%6;
@@ -209,21 +237,27 @@ function printPairings(){
             else
                 pos += 1;
         }
+        
+        // one left out
         if (rem == 1){
             document.getElementById("current").innerHTML += '<br>' + players[players.length-1].name + ' Gets Bye';
             players[players.length-1].score += 1;
         }
+        //two left out
         else if (rem == 2)
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')'  + '  Vs  ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')' ;
+        // Three left out
         else if (rem == 3){
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')'  + '  Vs  ' + players[players.length-3].name + ' (' + players[players.length-3].rating + ')' ;
             document.getElementById("current").innerHTML += '<br>' + players[players.length-1].name + ' Gets Bye';
             players[players.length-1].score += 1;
         }
+        // Four Left out
         else if (rem == 4){
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')'  + '  Vs  ' + players[players.length-4].name + ' (' + players[players.length-4].rating + ')' ;
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+2) + ': ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')'  + '  Vs  ' + players[players.length-3].name + ' (' + players[players.length-3].rating + ')';
         }
+        // Five Left out
         else if (rem == 5){
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-5].name + ' (' + players[players.length-5].rating + ')'  + '  Vs  ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')';
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+2) + ': ' + players[players.length-4].name + ' (' + players[players.length-4].rating + ')'  + '  Vs  ' + players[players.length-3].name + ' (' + players[players.length-3].rating + ')';
@@ -234,11 +268,14 @@ function printPairings(){
     return 0;
 }
 
-// hard as hell
+// hard as hell maybe not so much after I have finished
 // make the buttons to accept input result one at a time 
 function askResult(){
+    // Set the board no.
     var rem = players.length % 2;
     var boards = (players.length-rem)/2;
+
+    // If all the boards are done GO back to startrounds to invoke another algorithm round or finish the tournament
     if (details[3] >= boards){
         if (details[1] != 3)
             details[1] += 1;
@@ -247,6 +284,11 @@ function askResult(){
         details[2] += 1;
         r = startrounds();
     }
+
+    // If not.. ASK THE RESULT OF THE BOARD THAT HAS NOT BEEN ENTERED STARTING FROM THE TOP
+    // This will work as the js will stop running ie return and wait until lIstenEvent
+    // When the result is entered and pushed the scores are updated and the navRes() goes to askResult to
+    // Ask for the next board result or finish the round and return to startRounds.
     else{
         if (details[1] == 1)
             document.getElementById('matchup').innerHTML = players[details[0]].name + '  Vs  ' + players[details[0]+1].name + '  ';
@@ -307,6 +349,7 @@ function navRes(){
         }
     }
     else{
+        // Tons of Special Cases best to contact me to know what they are as it takes forever to explain stuff like this
         if (fTh[0] == 5)
             r = result(players.length-4, players.length-3, document.getElementById('resultBox').value);
         else if (fTh[0] == 4){
@@ -329,9 +372,14 @@ function navRes(){
                 details[0] += 1;
         }
         fTh[0] = 0;
-    }    
+    }
+    // Set Result Box Value ie the box content to nil for new input
+    // Update Board No.
+    // Go back to ask result.
     document.getElementById('resultBox').value = '';
     details[3] += 1;
     r = askResult();
     return 0;
 }
+
+// The Algorithm of asking and waiting happens via 2 recurring functions
