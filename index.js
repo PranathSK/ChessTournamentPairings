@@ -225,50 +225,26 @@ function printPairings(){
 // hard as hell
 // make the buttons to accept input result one at a time 
 function askResult(){
-    if (details[1] == 1){
-        var rem = players.length % 2;
-        var boards = (players.length-rem)/2;
-        if (details[3] >= boards){
-            details[1] = 2;
-            details[2] += 1;
-            r = startrounds();
-            return 0;
-        }
-        else{
-            document.getElementById('matchup').innerHTML = players[details[0]].name + '  Vs  ' + players[details[0]+1].name + '  ';
-            document.getElementById('resultBox').innerHTML = 'Submit and Next';
-            return 0;
-        }
+    var rem = players.length % 2;
+    var boards = (players.length-rem)/2;
+    if (details[3] >= boards){
+        if (details[1] != 3)
+            details[1] += 1;
+        else 
+            details[1] = 1;
+        details[2] += 1;
+        r = startrounds();
     }
-    else if (details[1] == 2){
-        var rem = players.length % 2;
-        var boards = (players.length-rem)/2;
-        if (details[3] >= boards){
-            details[1] = 3;
-            details[2] += 1;
-            r = startrounds();
-            return 0;
-        }
-        else{
+    else{
+        if (details[1] == 1)
+            document.getElementById('matchup').innerHTML = players[details[0]].name + '  Vs  ' + players[details[0]+1].name + '  ';
+        else if (details[1] == 2){
             if (players.length % 4 == 2 && (details[3]+1) == boards){
                 document.getElementById('matchup').innerHTML = players[players.length-2].name + '  Vs  ' + players[players.length-1].name + '  ';
                 fTwo = true;
-                return 0;
             }
-            else{
+            else
                 document.getElementById('matchup').innerHTML = players[details[0]+2].name + '  Vs  ' + players[details[0]].name + '  ';
-                return 0;
-            }
-        }
-    }
-    else{
-        var rem = players.length % 2;
-        var boards = (players.length-rem)/2;
-        if (details[3] >= boards){
-            details[1] = 1;
-            details[2] += 1;
-            startrounds();
-            return 0;
         }
         else{
             if (players.length % 6 == 5 && details[3]+1 == boards){
@@ -295,6 +271,7 @@ function askResult(){
                 document.getElementById('matchup').innerHTML = players[details[0]].name + '  Vs  ' + players[details[0]+3].name + '  ';
         }
     }
+    return 0;
 }
 
 // Get the result to the result function and updates player pos and board no. go back to askresult for next pairing result
