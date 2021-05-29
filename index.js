@@ -41,7 +41,7 @@ function startrounds(){
     if (details[2] > rounds){        
         document.getElementById("current").innerHTML = '';
         for (var i = 0; i < players.length; i++){
-            document.getElementById("current").innerHTML += (i+1) + '. ' + players[i].name +' ' + players[i].score + '/' + rounds +' ' + players[i].ratingi + ' -> ' + players[i].rating  + '<br>';
+            document.getElementById("current").innerHTML += (i+1) + '. ' + players[i].name +'   ' + players[i].score + '/' + rounds +'   ' + players[i].ratingi + '  ->  ' + players[i].rating  + '<br>';
             console.log(players[i]);
         }
         var rel = document.createElement('button');
@@ -202,19 +202,19 @@ function printPairings(){
             players[players.length-1].score += 1;
         }
         else if (rem == 2)
-            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[pos].name + ' (' + players[pos].rating + ')'  + '  Vs  ' + players[pos+3].name + ' (' + players[pos+3].rating + ')' ;
+            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')'  + '  Vs  ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')' ;
         else if (rem == 3){
-            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-2].name + '  Vs  ' + players[players.length-3].name;
+            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')'  + '  Vs  ' + players[players.length-3].name + ' (' + players[players.length-3].rating + ')' ;
             document.getElementById("current").innerHTML += '<br>' + players[players.length-1].name + ' Gets Bye';
             players[players.length-1].score += 1;
         }
         else if (rem == 4){
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')'  + '  Vs  ' + players[players.length-4].name + ' (' + players[players.length-4].rating + ')' ;
-            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')'  + '  Vs  ' + players[players.length-3].name + ' (' + players[players.length-3].rating + ')';
+            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+2) + ': ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')'  + '  Vs  ' + players[players.length-3].name + ' (' + players[players.length-3].rating + ')';
         }
         else if (rem == 5){
             document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-5].name + ' (' + players[players.length-5].rating + ')'  + '  Vs  ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')';
-            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-1].name + ' (' + players[players.length-4].rating + ')'  + '  Vs  ' + players[players.length-3].name + ' (' + players[players.length-3].rating + ')';
+            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+2) + ': ' + players[players.length-4].name + ' (' + players[players.length-4].rating + ')'  + '  Vs  ' + players[players.length-3].name + ' (' + players[players.length-3].rating + ')';
             document.getElementById("current").innerHTML += '<br>' + players[players.length-1].name + ' Gets Bye';
             players[players.length-1].score += 1;
         }
