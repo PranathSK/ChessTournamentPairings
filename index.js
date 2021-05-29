@@ -37,6 +37,18 @@ function startrounds(){
     r = update();
     document.getElementById('pls').style.visibility = "hidden";
     var rounds = 3;
+    if (players.length > 16  && players.length <= 30)
+        rounds = 4;
+    else if (players.length > 30 && players.length <= 48)
+        rounds = 5;
+    else if (players.length > 48 && players.length <= 64)
+        rounds = 6;
+    else if (players.length > 64 && players.length <= 83)
+        rounds = 7;
+    else if (players.length > 83 && players.length <= 100)
+        rounds = 8;
+    else
+        rounds = 10;
     // If the round no. is greater that rounds initialised, Exit program with result;
     if (details[2] > rounds){        
         document.getElementById("current").innerHTML = '';
