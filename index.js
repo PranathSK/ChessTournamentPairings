@@ -66,34 +66,29 @@ function startrounds(){
 function update(){
     for (var x = 0; x < players.length-1; x++){
         for (var y = 0; y < players.length-x-1; y++){            
-            if (players[y].score < players[y+1].score){
-                var temp = players[y];
-                players[y] = players[y+1];
-                players[y+1] = temp;
-            }
+            if (players[y].score < players[y+1].score)
+                r = swap(y, y+1);
             else if (players[y].score == players[y+1].score){
-                if (players[y].tiebreaker < players[y+1].tiebreaker){
-                    var temp = players[y];
-                    players[y] = players[y+1];
-                    players[y+1] = temp
-                }
+                if (players[y].tiebreaker < players[y+1].tiebreaker)
+                    r = swap(y, y+1);
                 else if (players[y].tiebreaker == players[y+1].tiebreaker){
-                    if (players[y].rating < players[y+1].rating){
-                        var temp = players[y];
-                        players[y] = players[y+1];
-                        players[y+1] = temp
-                    }
+                    if (players[y].rating < players[y+1].rating)
+                        r = swap(y, y+1);
                     else if (players[y].rating == players[y+1].rating){
-                        if (players[y].name > players[y+1].name){
-                            var temp = players[y];
-                            players[y] = players[y+1];
-                            players[y+1] = temp
-                        }
+                        if (players[y].name > players[y+1].name)
+                            r = swap(y, y+1)
                     }
                 }
             }
         }
     }
+    return 0;
+}
+
+function swap(x, y){
+    var temp = players[x];
+    players[x] = players[y];
+    players[y] = temp;
     return 0;
 }
 // Managing result given with the players
