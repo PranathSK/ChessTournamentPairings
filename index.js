@@ -6,7 +6,7 @@ var fTwo = false;
 var fTh = [0, 0];
 var r = 0;
 var details = [0, 1, 1, 0];
-details[1] = Math.round(Math.random()*2+1);
+details[1] = Math.round(Math.random()*3+1);
 // Details[0]: position of players, Details[1]: Type of pairing, Details[2]: round No. Details[4]: Board no.
 // The first type shall be random and then follow ascending pattern ie 123123123...
 
