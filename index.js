@@ -4,9 +4,10 @@ fth is for the 3rd pairing system specials*/
 var players = [];
 var fTwo = false;
 var fTh = [0, 0];
+var ff = 0;
 var r = 0;
 var details = [0, 1, 1, 0];
-details[1] = Math.round(Math.random()*2+1);
+details[1] = Math.round(Math.random()*3+1);
 // Details[0]: position of players, Details[1]: Type of pairing, Details[2]: round No. Details[4]: Board no.
 // The first type shall be random and then follow ascending pattern ie 123123123...
 
@@ -52,7 +53,7 @@ function startrounds(){
         rounds = 7;
     else if (players.length > 83 && players.length <= 100)
         rounds = 8;
-    else
+    else if (players.length > 100)
         rounds = 10;
     
     // If the round no. is greater that rounds initialised, Exit program with result;
@@ -227,7 +228,7 @@ function printPairings(){
     }
 
     // 1v4 2v5 3v6 7v10 8v11 9v12....
-    else {
+    else if (details[1] == 3){
         pos = 0;
         rem = players.length%6;
         for (b = 0; b < (players.length-rem)/2; b++){
@@ -265,6 +266,34 @@ function printPairings(){
             players[players.length-1].score += 1;
         }
     }
+    else{
+        pos = 0;
+        rem = players.length%4;
+        for (b = 0; b < (players.length - rem) / 2; b++){
+            if (pos % 2 == 0)
+                document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[pos+3].name + ' (' + players[pos+3].rating + ')'  + '  Vs  ' + players[pos].name + ' (' + players[pos].rating + ')' ;
+            else
+                document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[pos+1].name + ' (' + players[pos+1].rating + ')'  + '  Vs  ' + players[pos].name + ' (' + players[pos].rating + ')' ;
+            
+            // updating Pos
+            if ((pos+3) % 4 == 0)
+                pos += 3;
+            else
+                pos += 1;
+        }
+        
+        if (rem == 1){
+            document.getElementById("current").innerHTML += '<br>' + players[players.length-1].name + ' Gets Bye';
+            players[players.length-1].score += 1;
+        }
+        else if (rem == 2)
+            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')'  + '  Vs  ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')' ;
+        else if (rem == 3){
+            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')'  + '  Vs  ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')' ;
+            document.getElementById("current").innerHTML += '<br>' + players[players.length-3].name + ' Gets Bye';
+            players[players.length-3].score += 1;
+        }
+    }
     return 0;
 }
 
@@ -277,7 +306,7 @@ function askResult(){
 
     // If all the boards are done GO back to startrounds to invoke another algorithm round or finish the tournament
     if (details[3] >= boards){
-        if (details[1] != 3)
+        if (details[1] != 4)
             details[1] += 1;
         else 
             details[1] = 1;
@@ -300,7 +329,7 @@ function askResult(){
             else
                 document.getElementById('matchup').innerHTML = players[details[0]+2].name + '  Vs  ' + players[details[0]].name + '  ';
         }
-        else{
+        else if (details[1] == 3){
             if (players.length % 6 == 5 && details[3]+1 == boards){
                 fTh[0] = 5;
                 document.getElementById('matchup').innerHTML = players[players.length-4].name + '  Vs  ' + players[players.length-3].name + '  ';         
@@ -323,6 +352,21 @@ function askResult(){
             }
             else
                 document.getElementById('matchup').innerHTML = players[details[0]].name + '  Vs  ' + players[details[0]+3].name + '  ';
+        }
+        else{
+            if (players.length % 4 == 3 && details[3]+1 == boards){
+                ff = 3;
+                document.getElementById('matchup').innerHTML = players[players.length-1].name + '  Vs  ' + players[players.length-2].name + '  ';
+            }
+            else if (players.length % 4 == 3 && details[3]+1 == boards){
+                ff = 2;
+                document.getElementById('matchup').innerHTML = players[players.length-1].name + '  Vs  ' + players[players.length-2].name + '  ';
+            }
+            else
+                if (details[0] % 2 == 0)
+                    document.getElementById('matchup').innerHTML = players[details[0]+3].name + '  Vs  ' + players[details[0]].name + '  ';
+                else 
+                    document.getElementById('matchup').innerHTML = players[details[0]+1].name + '  Vs  ' + players[details[0]].name + '  ';
         }
     }
     return 0;
@@ -348,7 +392,7 @@ function navRes(){
                 details[0] += 1;
         }
     }
-    else{
+    else if (details[1] == 3){
         // Tons of Special Cases best to contact me to know what they are as it takes forever to explain stuff like this
         if (fTh[0] == 5)
             r = result(players.length-4, players.length-3, document.getElementById('resultBox').value);
@@ -372,6 +416,23 @@ function navRes(){
                 details[0] += 1;
         }
         fTh[0] = 0;
+    }
+    else{
+        if (ff == 3)
+            r = result(players.length-1, players.length-2, document.getElementById('resultBox').value);
+        else if (ff == 2)
+            r = result(players.length-1, players.length-2, document.getElementById('resultBox').value);
+        else{
+            if (details[0] % 2 == 0)
+                r = result(details[0]+3, details[0], document.getElementById('resultBox').value); 
+            else
+                r = result(details[0]+1, details[0], document.getElementById('resultBox').value);
+            
+            if ((details[0] + 3) % 4 == 0)
+                details[0] += 3;
+            else
+                details[0] += 1;
+        }
     }
     // Set Result Box Value ie the box content to nil for new input
     // Update Board No.
