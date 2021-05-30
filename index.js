@@ -6,7 +6,6 @@ var fTwo = false;
 var fTh = [0, 0];
 var ff = 0;
 var r = 0;
-var rounds;
 var details = [0, 1, 1, 0];
 details[1] = 4;
 // Details[0]: position of players, Details[1]: Type of pairing, Details[2]: round No. Details[4]: Board no.
@@ -43,7 +42,7 @@ function startrounds(){
     document.getElementById('pls').style.visibility = "hidden";
 
     // Set Rounds for the Tournament
-    rounds = 3;
+    var rounds = 3;
     if (players.length > 16  && players.length <= 30)
         rounds = 4;
     else if (players.length > 30 && players.length <= 48)
