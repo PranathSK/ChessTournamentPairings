@@ -227,7 +227,7 @@ function printPairings(){
     }
 
     // 1v4 2v5 3v6 7v10 8v11 9v12....
-    else {
+    else if (details[1] == 3){
         pos = 0;
         rem = players.length%6;
         for (b = 0; b < (players.length-rem)/2; b++){
@@ -265,6 +265,9 @@ function printPairings(){
             players[players.length-1].score += 1;
         }
     }
+    else{
+        
+    }
     return 0;
 }
 
@@ -277,7 +280,7 @@ function askResult(){
 
     // If all the boards are done GO back to startrounds to invoke another algorithm round or finish the tournament
     if (details[3] >= boards){
-        if (details[1] != 3)
+        if (details[1] != 4)
             details[1] += 1;
         else 
             details[1] = 1;
@@ -300,7 +303,7 @@ function askResult(){
             else
                 document.getElementById('matchup').innerHTML = players[details[0]+2].name + '  Vs  ' + players[details[0]].name + '  ';
         }
-        else{
+        else if (details[1] == 3){
             if (players.length % 6 == 5 && details[3]+1 == boards){
                 fTh[0] = 5;
                 document.getElementById('matchup').innerHTML = players[players.length-4].name + '  Vs  ' + players[players.length-3].name + '  ';         
@@ -323,6 +326,9 @@ function askResult(){
             }
             else
                 document.getElementById('matchup').innerHTML = players[details[0]].name + '  Vs  ' + players[details[0]+3].name + '  ';
+        }
+        else{
+
         }
     }
     return 0;
@@ -348,7 +354,7 @@ function navRes(){
                 details[0] += 1;
         }
     }
-    else{
+    else if (details[1] == 3){
         // Tons of Special Cases best to contact me to know what they are as it takes forever to explain stuff like this
         if (fTh[0] == 5)
             r = result(players.length-4, players.length-3, document.getElementById('resultBox').value);
@@ -372,6 +378,9 @@ function navRes(){
                 details[0] += 1;
         }
         fTh[0] = 0;
+    }
+    else{
+
     }
     // Set Result Box Value ie the box content to nil for new input
     // Update Board No.
