@@ -266,7 +266,32 @@ function printPairings(){
         }
     }
     else{
+        pos = 0;
+        rem = players.length%4;
+        for (b = 0; b < (players.length - rem) / 2; b++){
+            if (pos % 2 == 0)
+                document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[pos+3].name + ' (' + players[pos+3].rating + ')'  + '  Vs  ' + players[pos].name + ' (' + players[pos].rating + ')' ;
+            else
+                document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[pos+1].name + ' (' + players[pos+1].rating + ')'  + '  Vs  ' + players[pos].name + ' (' + players[pos].rating + ')' ;
+            
+            // updating Pos
+            if ((pos+3) % 4 == 0)
+                pos += 3;
+            else
+                pos += 1;
+        }
         
+        if (rem == 1){
+            document.getElementById("current").innerHTML += '<br>' + players[players.length-1].name + ' Gets Bye';
+            players[players.length-1].score += 1;
+        }
+        else if (rem == 2)
+            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')'  + '  Vs  ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')' ;
+        else if (rem == 3){
+            document.getElementById("current").innerHTML += '<br>'+ 'Board ' + (b+1) + ': ' + players[players.length-1].name + ' (' + players[players.length-1].rating + ')'  + '  Vs  ' + players[players.length-2].name + ' (' + players[players.length-2].rating + ')' ;
+            document.getElementById("current").innerHTML += '<br>' + players[players.length-3].name + ' Gets Bye';
+            players[players.length-3].score += 1;
+        }
     }
     return 0;
 }
